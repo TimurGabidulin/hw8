@@ -1,5 +1,5 @@
 #!/bin/bash
-#hello
+
 name
 bags_num
 city_dep
