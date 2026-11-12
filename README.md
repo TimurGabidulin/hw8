@@ -10,10 +10,10 @@ Type (Done) and (your name) next to the finished part.
 6. Ask how many bags will be checking.
 
 7. Display summary on the terminal
-	# name | number of bags | departure city | destination city | departure date | return date
+	- name | number of bags | departure city | destination city | departure date | return date
 	
 8. Find a file and search a user's name.
-	# If already have a reservation, remove that reservation from the file.
+	- If already have a reservation, remove that reservation from the file.
 
 9. Add the user's reservation to the file. Store it as a single line:
-	# name | number of bags | departure city | destination city | departure date | return date
+	- name | number of bags | departure city | destination city | departure date | return date
