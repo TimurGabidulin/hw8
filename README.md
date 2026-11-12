@@ -9,6 +9,7 @@ Homework8
 # 5. Calendar dialog with a returning date.
 # 6. Ask how many bags will be checking.
 
+
 # 7. Display summary on the terminal
 	# name | number of bags | departure city | destination city | departure date | return date
 	
