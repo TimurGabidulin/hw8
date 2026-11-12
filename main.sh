@@ -1,11 +1,11 @@
 #!/bin/bash
 
 name=0
-bags_num
-city_dep
-city_des
-date_dep
-date_ret
+bags_num=0
+city_dep=0
+city_des=0
+date_dep=0
+date_ret=0
 
 # 1. Dialog box to ask for the name.
 # 2. List of cities to depart(include 7 or more cities).
