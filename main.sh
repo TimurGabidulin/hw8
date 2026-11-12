@@ -16,9 +16,12 @@
 	# name | number of bags | departure city | destination city | departure date | return date
 
 
-name=0
-bags_num=0
-city_dep=0
-city_des=0
-date_dep=0
-date_ret=0
+function Ask_Name {
+	dialog --title "Informaion" --msgbox "This is a test" 0 0
+}
+
+function main {
+	Ask_Name
+	clear
+}
+main
