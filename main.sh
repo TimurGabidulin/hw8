@@ -1,6 +1,6 @@
 #!/bin/bash
 
-name
+name=0
 bags_num
 city_dep
 city_des
