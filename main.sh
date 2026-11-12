@@ -15,13 +15,26 @@
 #9. Add the user's reservation to the file. Store it as a single line:
 	# name | number of bags | departure city | destination city | departure date | return date
 
-
+#Implement required and bonus functions
 function Ask_Name {
 	dialog --title "Informaion" --msgbox "This is a test" 0 0
 }
 
+
+
+
+
+
+#Main function for Core functions
 function main {
 	Ask_Name
 	clear
 }
+
+
+
+
+
+
+#Calling
 main
