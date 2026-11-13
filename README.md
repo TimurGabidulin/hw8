@@ -9,7 +9,7 @@ Required Feature to Implement
 	3. Same list of cities which the traveler may be heading.
 	4. Calendar dialog with a leaving date.
 	5. Calendar dialog with a returning date.
-	6. Ask how many bags will be checking.
+	6. Ask how many bags will be checking. (DONE)(TIMUR)
 	7. Display summary on the terminal
 		- name | number of bags | departure city | destination city | departure date | return date
 	8. Find a file and search a user's name.
