@@ -4,7 +4,7 @@ Type (Done) and (your name) next to the implemented feature.
 
 Required Feature to Implement
 
-	1. Dialog box to ask for the name.
+	1. Dialog box to ask for the name. (DONE)(TIMUR)
 	2. List of cities to depart(include 7 or more cities).
 	3. Same list of cities which the traveler may be heading.
 	4. Calendar dialog with a leaving date.
