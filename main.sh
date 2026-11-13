@@ -18,29 +18,33 @@
 #Implement required and bonus functions
 function Ask_Name {
 	local name
-        	name=$(dialog --inputbox "Enter your name" --output-fd 1 0 0 || return 1)
+        	name=$(dialog --inputbox "Enter your name" --output-fd 1 0 0 ) || return 1
         	echo "$name"
 }
 
 
 function List_Cities {
 	local city
-	city=$(dialog --output-fd 1 --radiolist "Choose a city to depart" 0 0 3 a 'City 1' on b 'City 2' off c 'City 3' off || return 1)
+	city=$(dialog --output-fd 1 --radiolist "Choose a city to depart" 0 0 3 a 'City 1' on b 'City 2' off c 'City 3' off ) || return 1
 	echo "$city"
 	
 }
 
 function Num_Bags {
 	local bags
+	bags=$(dialog --inputbox "Enter the amount of bags you are going to have" --output-fd 1 0 0 ) || return 1
+	echo $bags
 	
 }
 
+
 #Main function for Core functions
 function main {
-	local user
-	local cities
+	local name
+	local city
+	local bags
 	
-	if ! user=$(Ask_Name); then
+	if ! name=$(Ask_Name); then
 		clear
 		echo "Cancelled"
 		return 1
@@ -52,8 +56,19 @@ function main {
 		return 1
 	fi
 	
+	if ! bags=$(Num_Bags); then
+		clear
+		echo "Cancelled"
+		return 1
+	fi
+	
+	dialog --title "Confirmation" --ok-label "Confirm"  --msgbox " Name: $name \n Bags: $bags \n From: $city" 14 55
+	
 	clear
-	echo "Hello, $user. You are departing from $city."
+	
+	
+	
+	echo "Hello, $name. You are departing from $city. You are going to have $bags bags"
 }
 
 
