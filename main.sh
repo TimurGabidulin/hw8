@@ -18,15 +18,15 @@
 #Implement required and bonus functions
 function Ask_Name {
 	local name
-        	name=$(dialog --inputbox "Enter your name" --output-fd 1 0 0)
+        	name=$(dialog --inputbox "Enter your name" --output-fd 1 0 0 || return 1)
         	echo "$name"
 }
 
 
 function List_Cities {
 	local city
-	city=$(dialog --output-fd 1 --radiolist "Choose a city to depart" 0 0 3 a 'City 1' on b 'City 2' off c 'City 3' off)
-	
+	city=$(dialog --output-fd 1 --radiolist "Choose a city to depart" 0 0 3 a 'City 1' on b 'City 2' off c 'City 3' off || return 1)
+	echo "$city"
 	
 }
 
