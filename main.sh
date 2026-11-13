@@ -25,12 +25,15 @@ function Ask_Name {
 
 function List_Cities {
 	local city
-	cities=$(dialog --output-fd 1 --radiolist "Choose a city to depart" 0 0 3 a 'City 1' on b 'City 2' off c 'City 3' off)
+	city=$(dialog --output-fd 1 --radiolist "Choose a city to depart" 0 0 3 a 'City 1' on b 'City 2' off c 'City 3' off)
 	
 	
 }
 
-
+function Num_Bags {
+	local bags
+	
+}
 
 #Main function for Core functions
 function main {
