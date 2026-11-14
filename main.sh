@@ -25,10 +25,9 @@ function Ask_Name {
 
 function List_Cities {
 	local city
-	city=$(dialog --output-fd 1 --radiolist "Choose a city to depart" 0 0 3 a 'City 1' on b 'City 2' off c 'City 3' off ) || return 1
+	city=$(dialog --output-fd 1 --radiolist "Choose a city to depart" 0 0 7 a 'Portland' on b 'Sesttle' off c 'Los Angeles' off d 'Las Vegas' off e 'Denver' off f 'Chicago' off g 'New York' off) || return 1
 	echo "$city"
-	
-}
+	}
 
 function Num_Bags {
 	local bags
@@ -56,6 +55,13 @@ function main {
 		return 1
 	fi
 	
+	if ! destination=$(local_destination); then
+	clear
+	echo "Cancelled" 
+	return 1
+	fi 
+	
+	
 	if ! bags=$(Num_Bags); then
 		clear
 		echo "Cancelled"
@@ -68,7 +74,7 @@ function main {
 	
 	
 	
-	echo "Hello, $name. You are departing from $city. You are going to have $bags bags"
+	echo "Hello, $name. You are departing from $city. To destination: $destination. You are going to have $bags bags"
 }
 
 
@@ -77,4 +83,7 @@ function main {
 
 
 #Calling
-main
+function main{
+local user 
+local city
+local destination 
