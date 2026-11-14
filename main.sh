@@ -22,18 +22,17 @@ function Ask_Name {
         	echo "$name"
 }
 
-
 function List_Cities {
 	local city
 	city=$(dialog --output-fd 1 --radiolist "Choose a city to depart" 0 0 7 a 'Portland' on b 'Seattle' off c 'Los Angeles' off d 'Las Vegas' off e 'Denver' off f 'Chicago' off g 'New York' off) || return 1
 	echo "$city"
 	}
 	
-	function Destination_city{
-	local destination 
+function Destination_city {
+	local destination
 	destination=$(dialog --output-fd 1 --radiolist "Choose your destination" 0 0 7 a 'Portland' on b 'Seattle' off c 'Los Angeles' off d 'Las Vegas' off e 'Denver' off f 'Chicago' off g 'New York' off) || return 1
 	echo "$destination"
-	}
+}
 
 function Num_Bags {
 	local bags
@@ -42,6 +41,20 @@ function Num_Bags {
 	
 }
 
+function Departure_Date {
+	local date
+	date=$(dialog --calendar "Choose your departure date" 0 0 --output-fd 1) || return 1
+	echo "$date"
+}
+	
+function Return_Date {
+	local date
+	date=$(dialog --calendar "Choose your return date" 0 0 --output-fd 1) || return 1
+	echo "$date"
+}
+
+
+
 
 #Main function for Core functions
 function main {
@@ -49,8 +62,8 @@ function main {
 	local city
 	local destination
 	local bags
-	local departure 
-	local returning 
+	local departure
+	local returning
 	
 	if ! name=$(Ask_Name); then
 		clear
@@ -64,11 +77,11 @@ function main {
 		return 1
 	fi
 	
-	if ! destination=$(local_destination); then
-	clear
-	echo "Cancelled" 
-	return 1
-	fi 
+	if ! destination=$(Destination_city); then
+		clear
+		echo "Cancelled"
+		return 1
+	fi
 	
 	
 	if ! bags=$(Num_Bags); then
@@ -78,31 +91,19 @@ function main {
 	fi
 	
 	if ! departure=$(Departure_Date); then
-	clear 
-	echo "Cancelled" 
-	return 1
-	fi 
-	
-	if ! returning=$(Return_Date); then
-	clear 
-	echo "Cancelled" 
+		clear
+		echo "Cancelled"
+		return 1
 	fi
 	
-	function Departure_Date {
-		local date 
-		date=$(dialog --calendar "Choose your departure date" 0 0 --output-fd 1) || return 1
-		echo "$date"
-		}
-		
-		function Return_Date {
-			local date 
-			date=$(dialog --calendar "Choose your return date" 0 0 --output-fd 1) || return 1
-			echo "$date" 
-			}
-			
+	if ! returning=$(Return_Date); then
+		clear
+		echo "Cancelled"
+	fi
 	
 	
-	dialog --title "Confirmation" --ok-label "Confirm"  --msgbox " Name: $name \n Bags: $bags \n From: $city \nTo: $destination\n Departure: $departure\n Return: $returning" 0 0 
+	
+	dialog --title "Confirmation" --ok-label "Confirm"  --msgbox " Name: $name \n Bags: $bags \n From: $city \nTo: $destination\n Departure: $departure\n Return: $returning" 0 0
 	
 	clear
 	
