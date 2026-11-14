@@ -1,15 +1,13 @@
 HW 8 A travel Reservation System in Bash
 
-Type (Done) and (your name) next to the implemented feature.
-
 Required Feature to Implement
 
-	1. Dialog box to ask for the name. (DONE)(TIMUR)
+	1. Dialog box to ask for the name.
 	2. List of cities to depart(include 7 or more cities).
 	3. Same list of cities which the traveler may be heading.
 	4. Calendar dialog with a leaving date.
 	5. Calendar dialog with a returning date.
-	6. Ask how many bags will be checking. (DONE)(TIMUR)
+	6. Ask how many bags will be checking.
 	7. Display summary on the terminal
 		- name | number of bags | departure city | destination city | departure date | return date
 	8. Find a file and search a user's name.
