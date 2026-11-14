@@ -25,8 +25,14 @@ function Ask_Name {
 
 function List_Cities {
 	local city
-	city=$(dialog --output-fd 1 --radiolist "Choose a city to depart" 0 0 7 a 'Portland' on b 'Sesttle' off c 'Los Angeles' off d 'Las Vegas' off e 'Denver' off f 'Chicago' off g 'New York' off) || return 1
+	city=$(dialog --output-fd 1 --radiolist "Choose a city to depart" 0 0 7 a 'Portland' on b 'Seattle' off c 'Los Angeles' off d 'Las Vegas' off e 'Denver' off f 'Chicago' off g 'New York' off) || return 1
 	echo "$city"
+	}
+	
+	function Destination_city{
+	local destination 
+	destination=$(dialog --output-fd 1 --radiolist "Choose your destination" 0 0 7 a 'Portland' on b 'Seattle' off c 'Los Angeles' off d 'Las Vegas' off e 'Denver' off f 'Chicago' off g 'New York' off) || return 1
+	echo "$destination"
 	}
 
 function Num_Bags {
@@ -41,7 +47,10 @@ function Num_Bags {
 function main {
 	local name
 	local city
+	local destination
 	local bags
+	local departure 
+	local returning 
 	
 	if ! name=$(Ask_Name); then
 		clear
@@ -68,7 +77,32 @@ function main {
 		return 1
 	fi
 	
-	dialog --title "Confirmation" --ok-label "Confirm"  --msgbox " Name: $name \n Bags: $bags \n From: $city" 14 55
+	if ! departure=$(Departure_Date); then
+	clear 
+	echo "Cancelled" 
+	return 1
+	fi 
+	
+	if ! returning=$(Return_Date); then
+	clear 
+	echo "Cancelled" 
+	fi
+	
+	function Departure_Date {
+		local date 
+		date=$(dialog --calendar "Choose your departure date" 0 0 --output-fd 1) || return 1
+		echo "$date"
+		}
+		
+		function Return_Date {
+			local date 
+			date=$(dialog --calendar "Choose your return date" 0 0 --output-fd 1) || return 1
+			echo "$date" 
+			}
+			
+	
+	
+	dialog --title "Confirmation" --ok-label "Confirm"  --msgbox " Name: $name \n Bags: $bags \n From: $city \nTo: $destination\n Departure: $departure\n Return: $returning" 0 0 
 	
 	clear
 	
@@ -83,7 +117,4 @@ function main {
 
 
 #Calling
-function main{
-local user 
-local city
-local destination 
+main
