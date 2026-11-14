@@ -103,7 +103,7 @@ function main {
 	
 	
 	
-	dialog --title "Confirmation" --ok-label "Confirm"  --msgbox " Name: $name \n Bags: $bags \n From: $city \nTo: $destination\n Departure: $departure\n Return: $returning" 0 0
+	dialog --title "Confirmation" --ok-label "Confirm"  --msgbox " Name: $name \n Bags: $bags \n From: $city \n To: $destination\n Departure: $departure\n Return: $returning" 0 0
 	
 	clear
 	
