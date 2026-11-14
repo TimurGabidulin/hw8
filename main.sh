@@ -24,13 +24,13 @@ function Ask_Name {
 
 function List_Cities {
 	local city
-	city=$(dialog --output-fd 1 --radiolist "Choose a city to depart" 0 0 7 a 'Portland' on b 'Seattle' off c 'Los Angeles' off d 'Las Vegas' off e 'Denver' off f 'Chicago' off g 'New York' off) || return 1
+	city=$(dialog --output-fd 1 --radiolist "Choose a city to depart" 0 0 7 Portland Portland off Seattle Seattle off 'Los Angeles' 'Los Angeles' off 'Las Vegas' 'Las Vegas' off Denver Denver off Chicago Chicago off 'New York' 'New York' off) || return 1
 	echo "$city"
 	}
 	
 function Destination_city {
 	local destination
-	destination=$(dialog --output-fd 1 --radiolist "Choose your destination" 0 0 7 a 'Portland' on b 'Seattle' off c 'Los Angeles' off d 'Las Vegas' off e 'Denver' off f 'Chicago' off g 'New York' off) || return 1
+	destination=$(dialog --output-fd 1 --radiolist "Choose your destination" 0 0 7 Portland Portland off Seattle Seattle off 'Los Angeles' 'Los Angeles' off 'Las Vegas' 'Las Vegas' off Denver Denver off Chicago Chicago off 'New York' 'New York' off) || return 1
 	echo "$destination"
 }
 
@@ -53,7 +53,12 @@ function Return_Date {
 	echo "$date"
 }
 
-
+function Search_Reservation {
+	local name
+	name=$1
+	
+	grep "^$name|" res.txt
+}
 
 
 #Main function for Core functions
