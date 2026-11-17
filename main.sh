@@ -74,6 +74,22 @@ function Search_Reservation {
 	grep "^$name|" res.txt
 }
 
+#store all information into a file
+function put_into_a_file {
+	FILE="reservation.txt"
+
+	local name
+	local bags
+	local dep_city
+	local dest_city
+	local dep_date
+	local ret_date
+
+	echo "$name | $bags | $dep_city | $dest_city | $dep_date | $ret_date" >> "$FILE"
+
+	echo "Reservation save."
+}
+
 
 #Main function for Core functions
 function main {
