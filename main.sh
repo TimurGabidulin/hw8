@@ -173,7 +173,7 @@ function main {
 	fi
 
 	#Search for existing reservation
-	if Search_Rservation "$name"; then
+	if Search_Reservation "$name"; then
 		Remove_Reservation "$name"
 	fi
 	
@@ -223,7 +223,7 @@ function main {
 	echo "$name | $bags | $city | $destination | $departure | $returning"
 
 	#Save Reservatin
-	put_into_a_file "$name" "$bags" "$city" "$destinatin" "$departure" "$returning"
+	put_into_a_file "$name" "$bags" "$city" "$destination" "$departure" "$returning"
 }
 
 
