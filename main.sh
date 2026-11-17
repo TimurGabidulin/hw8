@@ -17,9 +17,6 @@
 
 
 
-#testing Timur
-
-
 
 #Implement required and bonus functions
 
@@ -30,12 +27,19 @@ function Ask_Name {
         	echo "$name"
 }
 
+
+
+
+
 #show a list of cities to depart from
 function List_Cities {
 	local city
 	city=$(dialog --output-fd 1 --radiolist "Choose a city to depart" 0 0 7 Portland Portland off Seattle Seattle off 'Los Angeles' 'Los Angeles' off 'Las Vegas' 'Las Vegas' off Denver Denver off Chicago Chicago off 'New York' 'New York' off) || return 1
 	echo "$city"
 	}
+
+
+
 
 #show a list of cities to arrive implemented bonus feature remove departure from destination choices
 function Destination_city {
@@ -74,6 +78,8 @@ function Destination_city {
 	echo "$destination" 
 }
 
+
+
 #ask the user the amount of bags they are going  to have
 function Num_Bags {
 	local bags
@@ -81,6 +87,9 @@ function Num_Bags {
 	echo $bags
 	
 }
+
+
+
 
 #ask the user the date they want to depart using a calendar interface implement bonus feature
 function Departure_Date {
@@ -101,6 +110,8 @@ function Departure_Date {
 	done
 }
 
+
+
 #ask the user the date the want to return using a calendar interface
 function Return_Date {
 	local departure=$1
@@ -119,11 +130,14 @@ done
 }
 
 
+
 function Search_Reservation {
 	local name=$1
 	
 	grep "^$name|" res.txt
 }
+
+
 
 # removes the old reservation if the name already exists
 function Remove_Reservation {
@@ -132,6 +146,8 @@ function Remove_Reservation {
 	grep -v "^$name" res.txt > temp.txt 
 	mv temp.txt res.txt
 }
+
+
 
 #store all information into a file
 function put_into_a_file {
@@ -148,6 +164,14 @@ function put_into_a_file {
 
 	echo "Reservation save."
 }
+
+
+
+
+
+
+
+
 
 
 #Main function for Core functions
@@ -225,6 +249,13 @@ function main {
 	#Save Reservatin
 	put_into_a_file "$name" "$bags" "$city" "$destination" "$departure" "$returning"
 }
+
+
+
+
+
+
+
 
 
 
