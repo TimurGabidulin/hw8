@@ -37,11 +37,41 @@ function List_Cities {
 	echo "$city"
 	}
 
-#show a list of cities to arrive
+#show a list of cities to arrive implemented bonus feature remove departure from destination choices
 function Destination_city {
+	local city=$1
 	local destination
-	destination=$(dialog --output-fd 1 --radiolist "Choose your destination" 0 0 7 Portland Portland off Seattle Seattle off 'Los Angeles' 'Los Angeles' off 'Las Vegas' 'Las Vegas' off Denver Denver off Chicago Chicago off 'New York' 'New York' off) || return 1
-	echo "$destination"
+
+	case "$city" in 
+		Portland)
+			destination=$(dialog --output-fd 1 --radiolist "Choose your destination" 0 0 6 Seattle Seattle off 'Los Angeles' 'Los Angeles' off 'Las Vegas' 'Las Vegas' off Denver Denver off Chicago Chicago off 'New York' 'New York' off) || return 1
+			;;
+		Seattle)
+			destination=$(dialog --output-fd 1 --radiolist "Choose destination" 0 0 6 Portland Portland off 'Los Angeles' 'Los Angeles' off 'Las Vegas' 'Las Vegas' off Denver Denver off Chicago Chicago off 'New York' 'New York' off) || return 1
+            ;;
+
+        'Los Angeles')
+            destination=$(dialog --output-fd 1 --radiolist "Choose destination" 0 0 6 Portland Portland off Seattle Seattle off 'Las Vegas' 'Las Vegas' off Denver Denver off Chicago Chicago off 'New York' 'New York' off) || return 1
+            ;;
+
+        'Las Vegas')
+            destination=$(dialog --output-fd 1 --radiolist "Choose destination" 0 0 6 Portland Portland off Seattle Seattle off 'Los Angeles' 'Los Angeles' off Denver Denver off Chicago Chicago off 'New York' 'New York' off) || return 1
+            ;;
+
+        Denver)
+            destination=$(dialog --output-fd 1 --radiolist "Choose destination" 0 0 6 Portland Portland off Seattle Seattle off 'Los Angeles' 'Los Angeles' off 'Las Vegas' 'Las Vegas' off Chicago Chicago off 'New York' 'New York' off) || return 1
+            ;;
+
+        Chicago)
+            destination=$(dialog --output-fd 1 --radiolist "Choose destination" 0 0 6 Portland Portland off Seattle Seattle off 'Los Angeles' 'Los Angeles' off 'Las Vegas' 'Las Vegas' off Denver Denver off 'New York' 'New York' off) || return 1
+            ;;
+
+        'New York')
+            destination=$(dialog --output-fd 1 --radiolist "Choose destination" 0 0 6 Portland Portland off Seattle Seattle off 'Los Angeles' 'Los Angeles' off 'Las Vegas' 'Las Vegas' off Denver Denver off Chicago Chicago off) || return 1
+            ;;
+	
+	esac
+	echo "$destination" 
 }
 
 #ask the user the amount of bags they are going  to have
@@ -52,11 +82,23 @@ function Num_Bags {
 	
 }
 
-#ask the user the date they want to depart using a calendar interface
+#ask the user the date they want to depart using a calendar interface implement bonus feature
 function Departure_Date {
 	local date
-	date=$(dialog --calendar "Choose your departure date" 0 0 --output-fd 1) || return 1
-	echo "$date"
+	local today
+
+	today=$(date "+%Y%m%d")
+
+	while true; do
+		date=$(dialog --calendar "Choose departure date" 0 0 --output-fd 1) || return 1
+
+		if [ "$(date -j -f "%m/%d/%Y" "$date" "+%Y%m%d")" -ge "$today" ]; then 
+			echo "$date" 
+			break 
+		else
+			dialog --msgbox "Date cannot be in the past!" 0 0 
+		fi 
+	done
 }
 
 #ask the user the date the want to return using a calendar interface
@@ -133,7 +175,7 @@ function main {
 	fi
 	
 	#Show list of cities to arrive
-	if ! destination=$(Destination_city); then
+	if ! destination=$(Destination_city "$city"); then
 		clear
 		echo "Cancelled"
 		return 1
