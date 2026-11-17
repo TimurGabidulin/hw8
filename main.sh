@@ -90,7 +90,7 @@ function Departure_Date {
 	today=$(date "+%Y%m%d")
 
 	while true; do
-		date=$(dialog --calendar "Choose departure date" 0 0 --output-fd 1) || return 1
+		 date=$(dialog --output-fd 1 --calendar "Choose departure date" 0 0) || return 1
 
 		if [ "$(date -j -f "%d/%m/%Y" "$date" "+%Y%m%d")" -ge "$today" ]; then 
 			echo "$date" 
@@ -107,7 +107,7 @@ function Return_Date {
 	local date
 
 	while true; do
-	date=$(dialog --calendar "Choose your return date" 0 0 --output-fd 1) || return 1
+	date=$(dialog --output-fd 1 --calendar "Choose your return date" 0 0) || return 1
 
 	if [[ "$(date -j -f "%d/%m/%Y" "$date" "+%Y%m%d")" < "$date -j -f "%d/%m/%Y" "$departure" "+%Y%m%d")" ]]; then
 		dialog --msgbox "Return date cannot be before departure!" 0 0
