@@ -103,9 +103,19 @@ function Departure_Date {
 
 #ask the user the date the want to return using a calendar interface
 function Return_Date {
+	local departure=$1
 	local date
+
+	while true; do
 	date=$(dialog --calendar "Choose your return date" 0 0 --output-fd 1) || return 1
-	echo "$date"
+
+	if [[ "$date" < "$departure" ]]; then 
+		dialog --msgbox "Return date cannot be before departure!" 0 0
+	else 
+		echo "$date"
+		break
+	fi
+done
 }
 
 
@@ -196,9 +206,10 @@ function main {
 	fi
 	
 	#show a calendar of return dates
-	if ! returning=$(Return_Date); then
+	if ! returning=$(Return_Date "$departure"); then
 		clear
 		echo "Cancelled"
+		return 1
 	fi
 	
 	
