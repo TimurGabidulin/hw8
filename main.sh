@@ -109,7 +109,7 @@ function Return_Date {
 	while true; do
 	date=$(dialog --output-fd 1 --calendar "Choose your return date" 0 0) || return 1
 
-	if [[ "$(date -j -f "%d/%m/%Y" "$date" "+%Y%m%d")" < "$date -j -f "%d/%m/%Y" "$departure" "+%Y%m%d")" ]]; then
+	if [[ "$(date -j -f "%d/%m/%Y" "$date" "+%Y%m%d")" < "$(date -j -f "%d/%m/%Y" "$departure" "+%Y%m%d")" ]]; then
 		dialog --msgbox "Return date cannot be before departure!" 0 0
 	else 
 		echo "$date"
