@@ -68,22 +68,29 @@ function Return_Date {
 
 
 function Search_Reservation {
-	local name
-	name=$1
+	local name=$1
 	
 	grep "^$name|" res.txt
 }
 
+# removes the old reservation if the name already exists
+function Remove_Reservation {
+	local name=$1
+
+	grep -v "^$name" res.txt > temp.txt 
+	mv temp.txt res.txt
+}
+
 #store all information into a file
 function put_into_a_file {
-	FILE="reservation.txt"
+	FILE="res.txt"
 
-	local name
-	local bags
-	local dep_city
-	local dest_city
-	local dep_date
-	local ret_date
+	local name=$1
+	local bags=$2
+	local dep_city=$3
+	local dest_city=$4
+	local dep_date=$5
+	local ret_date=$6
 
 	echo "$name | $bags | $dep_city | $dest_city | $dep_date | $ret_date" >> "$FILE"
 
@@ -100,12 +107,22 @@ function main {
 	local bags
 	local departure
 	local returning
+
+	#checks if file exists and if not it creates it
+	if [ ! -f res.txt ]; then
+		touch res.txt
+	fi
 	
 	#Ask Name
 	if ! name=$(Ask_Name); then
 		clear
 		echo "Cancelled"
 		return 1
+	fi
+
+	#Search for existing reservation
+	if Search_Rservation "$name"; then
+		Remove_Reservation "$name"
 	fi
 	
 	#Show list of cities to depart
@@ -150,7 +167,10 @@ function main {
 	
 	
 	#print all user input in the terminal
-	echo "Hello, $name. You are departing from $city. To destination: $destination. You are going to have $bags bags"
+	echo "$name | $bags | $city | $destination | $departure | $returning"
+
+	#Save Reservatin
+	put_into_a_file "$name" "$bags" "$city" "$destinatin" "$departure" "$returning"
 }
 
 
