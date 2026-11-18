@@ -246,7 +246,7 @@ function main {
 	#print all user input in the terminal
 	echo "$name | $bags | $city | $destination | $departure | $returning"
 
-	#Save Reservatin
+	#Save Reservation
 	put_into_a_file "$name" "$bags" "$city" "$destination" "$departure" "$returning"
 }
 
