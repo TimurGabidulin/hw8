@@ -2,13 +2,13 @@ HW 8 A travel Reservation System in Bash
 
 Required Feature to Implement
 
-	1. Dialog box to ask for the name. "DONE"
-	2. List of cities to depart(include 7 or more cities). "DONE"
-	3. Same list of cities which the traveler may be heading. "DONE"
-	4. Calendar dialog with a leaving date. "DONE"
-	5. Calendar dialog with a returning date. "DONE"
-	6. Ask how many bags will be checking. "DONE"
-	7. Display summary on the terminal: "DONE"
+	"DONE" 1. Dialog box to ask for the name. 
+	"DONE" 2. List of cities to depart(include 7 or more cities). 
+	"DONE" 3. Same list of cities which the traveler may be heading. 
+	"DONE" 4. Calendar dialog with a leaving date. 
+	"DONE" 5. Calendar dialog with a returning date. 
+	"DONE" 6. Ask how many bags will be checking. 
+	"DONE" 7. Display summary on the terminal: 
 		- name | number of bags | departure city | destination city | departure date | return date
 	8. Find a file and search a user's name.
 		- If already have a reservation, remove that reservation from the file.
