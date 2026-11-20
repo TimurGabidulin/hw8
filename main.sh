@@ -115,8 +115,8 @@ function Departure_Date {
 }
 
 
-
-function Pretty_Date {
+# Change the visual of a date to print like DD/MM/YYYY instead of YYYYMMDD
+function dateVisual {
 	echo "$1" | sed 's/\(....\)\(..\)\(..\)/\2\/\3\/\1/'
 }
 
@@ -247,16 +247,16 @@ function main {
 	
 	
 	# 8.Show all information the user inserted for confirmation
-	dialog --title "Confirmation" --ok-label "Confirm"  --msgbox " Name: $name \n Bags: $bags \n From: $city \n To: $destination\n Departure: $(Pretty_Date "$departure")\n Return: $(Pretty_Date "$returning")" 0 0
+	dialog --title "Confirmation" --ok-label "Confirm"  --msgbox " Name: $name \n Bags: $bags \n From: $city \n To: $destination\n Departure: $(dateVisual "$departure")\n Return: $(dateVisual "$returning")" 0 0
 	
 	clear
 	
 	
 	# 9.print all user input in the terminal
-	echo "$name | $bags | $city | $destination | $(Pretty_Date "$departure") | $(Pretty_Date "$returning")"
+	echo "$name | $bags | $city | $destination | $(dateVisual "$departure") | $(dateVisual "$returning")"
 
 	# 10.Save Reservation
-	put_into_a_file "$name" "$bags" "$city" "$destination" "$(Pretty_Date "$departure")" "$(Pretty_Date "$returning")"
+	put_into_a_file "$name" "$bags" "$city" "$destination" "$(dateVisual "$departure")" "$(dateVisual "$returning")"
 }
 
 
