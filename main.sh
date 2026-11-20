@@ -109,12 +109,16 @@ function Departure_Date {
 			echo "$date"
 			break
 		else
-			dialog --msgbox "Not allowing departure before today." 0 0 >/dev/tty
+			dialog --msgbox "Not allowing departure before today." 0 0
 		fi
 	done
 }
 
 
+
+function Pretty_Date {
+	echo "$1" | sed 's/\(....\)\(..\)\(..\)/\2\/\3\/\1/'
+}
 
 
 #ask the user the date the want to return using a calendar interface
@@ -126,7 +130,7 @@ function Return_Date {
 		date=$(dialog --output-fd 1 --date-format "%Y%m%d" --calendar "Choose your return date" 0 0) || return 1
 
 		if [ "$date" -lt "$departure" ]; then
-			dialog --msgbox "Return date cannot be before departure!" 0 0 >/dev/tty
+			dialog --msgbox "Return date cannot be before departure!" 0 0
 		else
 			echo "$date"
 			break
@@ -243,16 +247,16 @@ function main {
 	
 	
 	# 8.Show all information the user inserted for confirmation
-	dialog --title "Confirmation" --ok-label "Confirm"  --msgbox " Name: $name \n Bags: $bags \n From: $city \n To: $destination\n Departure: $departure\n Return: $returning" 0 0
+	dialog --title "Confirmation" --ok-label "Confirm"  --msgbox " Name: $name \n Bags: $bags \n From: $city \n To: $destination\n Departure: $(Pretty_Date "$departure")\n Return: $(Pretty_Date "$returning")" 0 0
 	
 	clear
 	
 	
 	# 9.print all user input in the terminal
-	echo "$name | $bags | $city | $destination | $departure | $returning"
+	echo "$name | $bags | $city | $destination | $(Pretty_Date "$departure") | $(Pretty_Date "$returning")"
 
 	# 10.Save Reservation
-	put_into_a_file "$name" "$bags" "$city" "$destination" "$departure" "$returning"
+	put_into_a_file "$name" "$bags" "$city" "$destination" "$(Pretty_Date "$departure")" "$(Pretty_Date "$returning")"
 }
 
 
