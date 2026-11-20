@@ -20,8 +20,8 @@ Required Feature to Implement
 Bonus Features to Implement
 
 	"DONE" 1. Remove the departure city from the list of destination cities.
-	2. Not allowing departure before today.
-	3. Not allowing a return date earlier than the departure date.
+    "DONE" 2. Not allowing departure before today.
+	"DONE" 3. Not allowing a return date earlier than the departure date.
 	4. Tell the user, as soon as they enter their name, if the have pre-existing reservation, showing them
 		details, and giving them the option of replacing it or keeping it.
 	5. Show the user their infor at the end and asking for confirmation before writing to the res.txt file
