@@ -8,9 +8,9 @@
 # Professor: Nicholas Macias
 
 # Synopsis:
-#	A bash script runs a traverl reservation system entirely through dialog windows.
-#	It asks for the traveler's name, then shows a menu of at leat seven departure cities,
-# 	followed by a menu of destination cities. Two calendar dialogs collect the departure
+#	A bash script runs a travel reservation system entirely through dialog window.
+#	It asks for the traveler's name, then shows a menu of at least seven departure cities,
+# 	followed by a menu of destination cities. Two calendar dialogue collect the departure
 #	and return dates, and a final prompt asks how many bags will be checked. The script
 #	shows a summary of the trip.
 #
@@ -19,6 +19,7 @@
 #	reservation, then appends the new one as a single line.
 
 #	name| number of bags | departure city | destination city | departure date | return date
+
 #########
 
 
