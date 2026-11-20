@@ -93,28 +93,19 @@ function Num_Bags {
 }
 
 
-function To_Ymd {
-	local date_text=$1
-	
-	local day=${date_text:0:2}
-	local month=${date_text:3:2}
-	local year=${date_text:6:4}
-	
-	echo "$year$month$day"
-}
+
 
 
 #ask the user the date they want to depart using a calendar interface implement bonus feature
 function Departure_Date {
-	local date
-	local today
+	local date today
 
-	today=$(date "+%Y%m%d")
+	today=$(date +%Y%m%d)
 
 	while true; do
-		date=$(dialog --output-fd 1 --calendar "Choose departure date" 0 0) || return 1
+		date=$(dialog --output-fd 1 --date-format "%Y%m%d" --calendar "Choose departure date" 0 0) || return 1
 
-		if [ "$(To_Ymd "$date")" -ge "$today" ]; then
+		if [ "$date" -ge "$today" ]; then
 			echo "$date"
 			break
 		else
@@ -132,9 +123,9 @@ function Return_Date {
 	local date
 
 	while true; do
-		date=$(dialog --output-fd 1 --calendar "Choose your return date" 0 0) || return 1
+		date=$(dialog --output-fd 1 --date-format "%Y%m%d" --calendar "Choose your return date" 0 0) || return 1
 
-		if [ "$(To_Ymd "$date")" -lt "$(To_Ymd "$departure")" ]; then
+		if [ "$date" -lt "$departure" ]; then
 			dialog --msgbox "Return date cannot be before departure!" 0 0 >/dev/tty
 		else
 			echo "$date"
