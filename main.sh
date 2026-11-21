@@ -24,6 +24,9 @@
 
 
 
+
+
+
 # Show user input where they put their name
 function Ask_Name {
 	local name
@@ -35,12 +38,24 @@ function Ask_Name {
 
 
 
+
 #show a list of cities to depart from
 function List_Cities {
 	local city
-	city=$(dialog --output-fd 1 --radiolist "Choose a city to depart" 0 0 7 Portland Portland off Seattle Seattle off 'Los Angeles' 'Los Angeles' off 'Las Vegas' 'Las Vegas' off Denver Denver off Chicago Chicago off 'New York' 'New York' off) || return 1
-	echo "$city"
-	}
+	local list_of_cities=("Portland" "Seattle" "Los Angeles" "Las Vegas" "Denver" "Chicago" "New York")
+	local choices=()
+	local departure
+
+	for city in "${list_of_cities[@]}"; do
+		choices+=("$city" "$city" off)
+	done
+
+	departure=$(dialog --output-fd 1 --radiolist "Choose a city to depart" 0 0 7 "${choices[@]}") || return 1
+
+	echo "$departure"
+}
+
+
 
 
 
@@ -65,6 +80,9 @@ function Destination_city {
 
 
 
+
+
+
 #ask the user the amount of bags they are going  to have
 function Num_Bags {
 	local bags
@@ -72,6 +90,7 @@ function Num_Bags {
 	echo $bags
 	
 }
+
 
 
 
@@ -99,6 +118,7 @@ function Departure_Date {
 
 
 
+
 #ask the user the date the want to return using a calendar interface
 function Return_Date {
 	local departure=$1
@@ -118,10 +138,15 @@ function Return_Date {
 
 
 
+
+
+
 # Change the visual of a date to print like DD/MM/YYYY instead of YYYYMMDD
 function dateVisual {
 	echo "$1" | sed 's/\(....\)\(..\)\(..\)/\2\/\3\/\1/'
 }
+
+
 
 
 
@@ -134,6 +159,9 @@ function Search_Reservation {
 
 
 
+
+
+
 # removes the old reservation if the name already exists
 function Remove_Reservation {
 	local name=$1
@@ -141,6 +169,9 @@ function Remove_Reservation {
 	grep -v "^$name" res.txt > temp.txt
 	mv temp.txt res.txt
 }
+
+
+
 
 
 
@@ -162,10 +193,7 @@ function put_into_a_file {
 
 
 
-
-
-
-
+#############
 
 
 
