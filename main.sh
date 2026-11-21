@@ -39,7 +39,7 @@ function Ask_Name {
 
 
 
-#show a list of cities to depart from
+#Show a list of cities to depart from
 function List_Cities {
 	local city
 	local list_of_cities=("Portland" "Seattle" "Los Angeles" "Las Vegas" "Denver" "Chicago" "New York")
@@ -60,7 +60,7 @@ function List_Cities {
 
 
 
-#show a list of cities to arrive implemented bonus feature remove departure from destination choices
+#Show a list of cities to arrive implemented bonus feature remove departure from destination choices
 function Destination_city {
 	local departure=$1
 	local destination
@@ -83,7 +83,7 @@ function Destination_city {
 
 
 
-#ask the user the amount of bags they are going  to have
+#Ask the user the amount of bags they are going  to have
 function Num_Bags {
 	local bags
 	bags=$(dialog --inputbox "Enter the amount of bags you are going to have" --output-fd 1 0 0 ) || return 1
@@ -96,7 +96,7 @@ function Num_Bags {
 
 
 
-#ask the user the date they want to depart using a calendar interface implement bonus feature
+#Ask the user the date they want to depart using a calendar interface implement bonus feature
 function Departure_Date {
 	local date today
 
@@ -119,7 +119,7 @@ function Departure_Date {
 
 
 
-#ask the user the date the want to return using a calendar interface
+#Ask the user the date the want to return using a calendar interface
 function Return_Date {
 	local departure=$1
 	local date
@@ -150,7 +150,7 @@ function dateVisual {
 
 
 
-
+#Search reservation with a similar name
 function Search_Reservation {
 	local name=$1
 	
@@ -162,7 +162,7 @@ function Search_Reservation {
 
 
 
-# removes the old reservation if the name already exists
+#Remove the old reservation if the name already exists
 function Remove_Reservation {
 	local name=$1
 
@@ -175,7 +175,7 @@ function Remove_Reservation {
 
 
 
-#store all information into a file
+#Store all information into a file
 function put_into_a_file {
 	FILE="res.txt"
 
