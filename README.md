@@ -24,4 +24,4 @@ Bonus Features to Implement
 	"DONE" 3. Not allowing a return date earlier than the departure date.
 	"DONE" 4. Tell the user, as soon as they enter their name, if the have pre-existing reservation, showing them
 		details, and giving them the option of replacing it or keeping it.
-	5. Show the user their infor at the end and asking for confirmation before writing to the res.txt file
+	"DONE" 5. Show the user their infor at the end and asking for confirmation before writing to the res.txt file
