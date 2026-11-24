@@ -150,10 +150,10 @@ function dateVisual {
 
 
 
-#Search reservation with a similar name
+#Search for a reservation with the same name
 function Search_Reservation {
 	local name=$1
-	
+
 	grep "^$name|" res.txt
 }
 
@@ -166,8 +166,33 @@ function Search_Reservation {
 function Remove_Reservation {
 	local name=$1
 
-	grep -v "^$name" res.txt > temp.txt
+	grep -v "^$name|" res.txt > temp.txt
 	mv temp.txt res.txt
+}
+
+
+
+
+
+
+#Show the old reservation and ask if the user wants to replace it
+function Existing_Prompt {
+	local record=$1
+	local name
+	local bags
+	local dep_city
+	local dest_city
+	local dep_date
+	local ret_date
+
+	name=$(echo "$record" | cut -d'|' -f1)
+	bags=$(echo "$record" | cut -d'|' -f2)
+	dep_city=$(echo "$record" | cut -d'|' -f3)
+	dest_city=$(echo "$record" | cut -d'|' -f4)
+	dep_date=$(echo "$record" | cut -d'|' -f5)
+	ret_date=$(echo "$record" | cut -d'|' -f6)
+
+	dialog --title "Existing reservation" --yes-label "Replace" --no-label "Keep" --yesno " You already have a reservation \n\n Name: $name \n Bags: $bags \n From: $dep_city \n To: $dest_city \n Departure: $dep_date \n Return: $ret_date \n\n Do you want to replace it?" 0 0
 }
 
 
@@ -186,7 +211,7 @@ function put_into_a_file {
 	local dep_date=$5
 	local ret_date=$6
 
-	echo "$name | $bags | $dep_city | $dest_city | $dep_date | $ret_date" >> "$FILE"
+	echo "$name|$bags|$dep_city|$dest_city|$dep_date|$ret_date" >> "$FILE"
 
 	echo "Reservation save."
 }
@@ -206,6 +231,8 @@ function main {
 	local bags
 	local departure
 	local returning
+	local existing
+	local replace=0
 
 	#checks if file exists and if not it creates it
 	if [ ! -f res.txt ]; then
@@ -219,9 +246,18 @@ function main {
 		return 1
 	fi
 
-	# 2.Search for existing reservation
-	if Search_Reservation "$name"; then
-		Remove_Reservation "$name"
+	# 2.Check if the user already has a reservation
+	existing=$(Search_Reservation "$name")
+
+	if [ -n "$existing" ]; then
+		if Existing_Prompt "$existing"; then
+			replace=1
+		else
+			clear
+			echo "Keeping your old reservation"
+			echo "$existing"
+			return 0
+		fi
 	fi
 	
 	# 3.Show list of cities to depart
@@ -267,10 +303,15 @@ function main {
 	
 	
 	# 9.print all user input in the terminal
-	echo "$name | $bags | $city | $destination | $(dateVisual "$departure") | $(dateVisual "$returning")"
+	echo "$name|$bags|$city|$destination|$(dateVisual "$departure")|$(dateVisual "$returning")"
 
 	# 10.Save Reservation
+	if [ "$replace" -eq 1 ]; then
+		Remove_Reservation "$name"
+	fi
+
 	put_into_a_file "$name" "$bags" "$city" "$destination" "$(dateVisual "$departure")" "$(dateVisual "$returning")"
+
 }
 
 

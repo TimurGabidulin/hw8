@@ -1,4 +1,5 @@
 Timur  | 2 | Portland | Denver | 11/27/2026 | 12/20/2026
-Timur Gabidulin | 2 | Portland | Denver | 11/20/2026 | 12/20/2026
 Timur  | 2 | Portland |  | 11/20/2026 | 11/20/2026
 Timur | 2 | Los Angeles | Denver | 11/20/2026 | 12/20/2026
+Timur Gabidulin|2|Portland|Las Vegas|12/24/2026|01/24/2027
+Timur Gabidulin |2|Chicago|Denver|11/24/2026|11/24/2026
