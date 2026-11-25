@@ -176,7 +176,7 @@ function Remove_Reservation {
 
 
 #Show the old reservation and ask if the user wants to replace it
-function Existing_Prompt {
+function Existing_Reservation {
 	local record=$1
 	local name
 	local bags
@@ -185,12 +185,12 @@ function Existing_Prompt {
 	local dep_date
 	local ret_date
 
-	name=$(echo "$record" | cut -d'|' -f1)
-	bags=$(echo "$record" | cut -d'|' -f2)
-	dep_city=$(echo "$record" | cut -d'|' -f3)
-	dest_city=$(echo "$record" | cut -d'|' -f4)
-	dep_date=$(echo "$record" | cut -d'|' -f5)
-	ret_date=$(echo "$record" | cut -d'|' -f6)
+	name=$(echo "$record"      | sed -E 's/^([^|]*).*/\1/')
+	bags=$(echo "$record"      | sed -E 's/^([^|]*\|){1}([^|]*).*/\2/')
+	dep_city=$(echo "$record"  | sed -E 's/^([^|]*\|){2}([^|]*).*/\2/')
+	dest_city=$(echo "$record" | sed -E 's/^([^|]*\|){3}([^|]*).*/\2/')
+	dep_date=$(echo "$record"  | sed -E 's/^([^|]*\|){4}([^|]*).*/\2/')
+	ret_date=$(echo "$record"  | sed -E 's/^([^|]*\|){5}([^|]*).*/\2/')
 
 	dialog --title "Existing reservation" --yes-label "Replace" --no-label "Keep" --yesno " You already have a reservation \n\n Name: $name \n Bags: $bags \n From: $dep_city \n To: $dest_city \n Departure: $dep_date \n Return: $ret_date \n\n Do you want to replace it?" 0 0
 }
@@ -250,7 +250,7 @@ function main {
 	existing=$(Search_Reservation "$name")
 
 	if [ -n "$existing" ]; then
-		if Existing_Prompt "$existing"; then
+		if Existing_Reservation "$existing"; then
 			replace=1
 		else
 			clear
