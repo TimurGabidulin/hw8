@@ -14,9 +14,10 @@
 #	and return dates, and a final prompt asks how many bags will be checked. The script
 #	shows a summary of the trip.
 #
-#	The script checks res.txt in the currecnt directory for an existing reservation under the
-#	traveler's name. It matches only on the name. If it finds a match, it deletes that old
-#	reservation, then appends the new one as a single line.
+#	The script checks res.txt in the current directory for an existing reservation under the
+#	traveler's name. It matches only on the name. If it finds a match, it shows the old
+#	reservation and asks whether to replace it. If the user chooses to replace it, the old
+#	reservation is deleted and the new one is appended as a single line:
 
 #	name| number of bags | departure city | destination city | departure date | return date
 
@@ -27,7 +28,9 @@
 
 
 
-# Show user input where they put their name
+#Ask_Name
+# Show an input box asking for the traveler's name and returns it.
+# Returns 1 if the user cancels.
 function Ask_Name {
 	local name
         	name=$(dialog --inputbox "Enter your name" --output-fd 1 0 0 ) || return 1
@@ -39,7 +42,9 @@ function Ask_Name {
 
 
 
-#Show a list of cities to depart from
+#List_Cities
+# Shows a radio list of seven departure cities and return the chose city.
+# Returns 1 if the user cancels.
 function List_Cities {
 	local city
 	local list_of_cities=("Portland" "Seattle" "Los Angeles" "Las Vegas" "Denver" "Chicago" "New York")
@@ -60,7 +65,10 @@ function List_Cities {
 
 
 
-#Show a list of cities to arrive implemented bonus feature remove departure from destination choices
+#Destination_city
+# Show a radio list of destination cities with the departure city removed,
+# so a traveler cannot fly to the city they leave from.
+# Returns the chosen city, or 1 if th euser cancels.
 function Destination_city {
 	local departure=$1
 	local destination
@@ -83,7 +91,9 @@ function Destination_city {
 
 
 
-#Ask the user the amount of bags they are going  to have
+#Num_Bags
+# Show an input box asking how many bags will be checked and returns the value entered. 
+# Returns 1 if the user cancels.
 function Num_Bags {
 	local bags
 	bags=$(dialog --inputbox "Enter the amount of bags you are going to have" --output-fd 1 0 0 ) || return 1
@@ -96,7 +106,10 @@ function Num_Bags {
 
 
 
-#Ask the user the date they want to depart using a calendar interface implement bonus feature
+#Departure_Date
+# Shows a calendar dialog for the departure date. 
+# It rejects any date before today and asks again until a valid date is chosen. 
+# Returns 1 if the user cancels. 
 function Departure_Date {
 	local date today
 
@@ -119,7 +132,10 @@ function Departure_Date {
 
 
 
-#Ask the user the date the want to return using a calendar interface
+#Return_Date
+# Shows a calendat dialog for the return date.
+# If rejects any date earlier than the departure date and asks again until a valid date is chosen. 
+# Return 1 if the user cancels.
 function Return_Date {
 	local departure=$1
 	local date
@@ -141,7 +157,8 @@ function Return_Date {
 
 
 
-# Change the visual of a date to print like DD/MM/YYYY instead of YYYYMMDD
+#dateVisual
+# Converts a date from YYYYMMDD to MM/DD/YYYY for display and storage.
 function dateVisual {
 	echo "$1" | sed 's/\(....\)\(..\)\(..\)/\2\/\3\/\1/'
 }
@@ -150,7 +167,10 @@ function dateVisual {
 
 
 
-#Search for a reservation with the same name
+
+#Search_Reservation
+# Searches res.txt for a line starting with the given name 
+# and print the matching reservation, if any. Matches on the name only.
 function Search_Reservation {
 	local name=$1
 
@@ -162,7 +182,8 @@ function Search_Reservation {
 
 
 
-#Remove the old reservation if the name already exists
+#Remove_Reservation
+# Deletes any reservation in res.txt that matches the given name by rewriting the file without that line.
 function Remove_Reservation {
 	local name=$1
 
@@ -175,7 +196,9 @@ function Remove_Reservation {
 
 
 
-#Show the old reservation and ask if the user wants to replace it
+#Existing_Reservation
+# Splits an existing reservation record into its fields, displays it, and asks
+# whether to Replace or Keep it. Returns 0 for Replace, 1 for Keep.
 function Existing_Reservation {
 	local record=$1
 	local name
@@ -200,7 +223,8 @@ function Existing_Reservation {
 
 
 
-#Store all information into a file
+#put_into_a_file:
+# Appends the reservation to res.txt as a single line.
 function put_into_a_file {
 	FILE="res.txt"
 
@@ -218,11 +242,21 @@ function put_into_a_file {
 
 
 
+
+
+
 #############
 
 
 
-#Main function for Core functions
+
+
+
+#Main
+# The program flow: creates res.txt if does not exist, asks for the name.
+# Checks for an existing reservation, collects cities, bags, and dates.
+# Shows a confirmation summary, prints the record to the terminal,
+# removes the old reservation if it is being replaced, and saves the new one.
 function main {
 	#Variables
 	local name
@@ -317,5 +351,7 @@ function main {
 
 
 
-#Calling
+
+
+#Calling the main function
 main
